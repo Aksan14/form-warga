@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulir Data Warga</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background-color: #f4f7fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      background-color: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      padding: 24px;
+      width: 100%;
+      max-width: 600px;
+    }
+
+    h1 {
+      color: #1a237e;
+      margin-bottom: 24px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    label {
+      display: block;
+      color: #1a237e;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: border-color 0.3s;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: #1a237e;
+    }
+
+    .error {
+      border-color: #d32f2f;
+    }
+
+    .error-message {
+      color: #d32f2f;
+      font-size: 12px;
+      margin-top: 4px;
+      display: none;
+    }
+
+    .form-group.error .error-message {
+      display: block;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #1a237e;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #0d47a1;
+    }
+
+    button:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+
+    .alert {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 16px;
+      border-radius: 8px;
+      color: white;
+      display: none;
+      z-index: 1000;
+    }
+
+    .alert.success {
+      background-color: #4caf50;
+    }
+
+    .alert.error {
+      background-color: #d32f2f;
+    }
+
+    .alert.show {
+      display: block;
+      animation: fadeOut 3s forwards;
+    }
+
+    @keyframes fadeOut {
+      0% { opacity: 1; }
+      80% { opacity: 1; }
+      100% { opacity: 0; display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Tambah Data Warga</h1>
+    <form id="wargaForm">
+      <div class="form-group">
+        <label for="nik">NIK *</label>
+        <input type="text" id="nik" name="nik" maxlength="16" pattern="[0-9]*" required>
+        <div class="error-message">NIK harus berisi 16 digit angka</div>
+      </div>
+      <div class="form-group">
+        <label for="nama_lengkap">Nama Lengkap *</label>
+        <input type="text" id="nama_lengkap" name="nama_lengkap" required>
+        <div class="error-message">Nama lengkap wajib diisi</div>
+      </div>
+      <div class="form-group">
+        <label for="tempat_lahir">Tempat Lahir *</label>
+        <input type="text" id="tempat_lahir" name="tempat_lahir" required>
+        <div class="error-message">Tempat lahir wajib diisi</div>
+      </div>
+      <div class="form-group">
+        <label for="tanggal_lahir">Tanggal Lahir *</label>
+        <input type="date" id="tanggal_lahir" name="tanggal_lahir" required>
+        <div class="error-message">Tanggal lahir wajib diisi</div>
+      </div>
+      <div class="form-group">
+        <label for="jenis_kelamin">Jenis Kelamin *</label>
+        <select id="jenis_kelamin" name="jenis_kelamin" required>
+          <option value="">Pilih Jenis Kelamin</option>
+          <option value="Laki-laki">Laki-laki</option>
+          <option value="Perempuan">Perempuan</option>
+        </select>
+        <div class="error-message">Jenis kelamin wajib diisi</div>
+      </div>
+      <div class="form-group">
+        <label for="pendidikan">Pendidikan *</label>
+        <select id="pendidikan" name="pendidikan" required>
+          <option value="">Pilih Pendidikan</option>
+          <option value="Tidak Sekolah">Tidak Sekolah</option>
+          <option value="SD">SD</option>
+          <option value="SMP">SMP</option>
+          <option value="SMA">SMA</option>
+          <option value="SMK">SMK</option>
+          <option value="D1">D1</option>
+          <option value="D2">D2</option>
+          <option value="D3">D3</option>
+          <option value="S1">S1</option>
+          <option value="S2">S2</option>
+          <option value="S3">S3</option>
+        </select>
+        <div class="error-message">Pendidikan wajib diisi</div>
+      </div>
+      <div class="form-group">
+        <label for="pekerjaan">Pekerjaan *</label>
+        <select id="pekerjaan" name="pekerjaan" required>
+          <option value="">Pilih Pekerjaan</option>
+          <option value="Belum Bekerja">Belum Bekerja</option>
+          <option value="Pelajar/Mahasiswa">Pelajar/Mahasiswa</option>
+          <option value="Petani">Petani</option>
+          <option value="Nelayan">Nelayan</option>
+          <option value="PNS">PNS</option>
+          <option value="TNI/Polri">TNI/Polri</option>
+          <option value="Karyawan Swasta">Karyawan Swasta</option>
+          <option value="Wiraswasta">Wiraswasta</option>
+          <option value="Buruh">Buruh</option>
+          <option value="Pensiunan">Pensiunan</option>
+          <option value="Ibu Rumah Tangga">Ibu Rumah Tangga</option>
+          <option value="Lainnya">Lainnya</option>
+        </select>
+        <div class="error-message">Pekerjaan wajib diisi</div>
+      </div>
+      <div class="form-group" id="pekerjaanLainnyaGroup" style="display: none;">
+        <label for="pekerjaanLainnya">Pekerjaan Lainnya *</label>
+        <input type="text" id="pekerjaanLainnya" name="pekerjaanLainnya">
+        <div class="error-message">Pekerjaan lainnya wajib diisi</div>
+      </div>
+      <div class="form-group">
+        <label for="agama">Agama *</label>
+        <select id="agama" name="agama" required>
+          <option value="">Pilih Agama</option>
+          <option value="Islam">Islam</option>
+          <option value="Kristen">Kristen</option>
+          <option value="Katolik">Katolik</option>
+          <option value="Hindu">Hindu</option>
+          <option value="Buddha">Buddha</option>
+          <option value="Konghucu">Konghucu</option>
+        </select>
+        <div class="error-message">Agama wajib diisi</div>
+      </div>
+      <div class="form-group">
+        <label for="status_pernikahan">Status Pernikahan *</label>
+        <select id="status_pernikahan" name="status_pernikahan" required>
+          <option value="">Pilih Status</option>
+          <option value="Belum Men Wiraswasta">Wiraswasta</option>
+          <option value="Buruh">Buruh</option>
+          <option value="Pensiunan">Pensiunan</option>
+          <option value="Ibu Rumah Tangga">Ibu Rumah Tangga</option>
+          <option value="Lainnya">Lainnya</option>
+        </select>
+        <div class="error-message">Pekerjaan wajib diisi</div>
+      </div>
+      <div class="form-group" id="pekerjaanLainnyaGroup" style="display: none;">
+        <label for="pekerjaanLainnya">Pekerjaan Lainnya *</label>
+        <input type="text" id="pekerjaanLainnya" name="pekerjaanLainnya">
+        <div class="error-message">Pekerjaan lainnya wajib diisi</div>
+      </div>
+      <div class="form-group">
+        <label for="agama">Agama *</label>
+        <select id="agama" name="agama" required>
+          <option value="">Pilih Agama</option>
+          <option value="Islam">Islam</option>
+          <option value="Kristen">Kristen</option>
+          <option value="Katolik">Katolik</option>
+          <option value="Hindu">Hindu</option>
+          <option value="Buddha">Buddha</option>
+          <option value="Konghucu">Konghucu</option>
+        </select>
+        <div class="error-message">Agama wajib diisi</div>
+      </div>
+      <div class="form-group">
+        <label for="status_pernikahan">Status Pernikahan *</label>
+        <select id="status_pernikahan" name="status_pernikahan" required>
+          <option value="">Pilih Status</option>
+          <option value="Belum Menikah">Belum Menikah</option>
+          <option value="Menikah">Menikah</option>
+          <option value="Cerai Mati">Cerai Mati</option>
+          <option value="Cerai Hidup">Cerai Hidup</option>
+        </select>
+        <div class="error-message">Status pernikahan wajib diisi</div>
+      </div>
+      <div class="form-group">
+        <label for="kewarganegaraan">Kewarganegaraan *</label>
+        <select id="kewarganegaraan" name="kewarganegaraan" required>
+          <option value="">Pilih Kewarganegaraan</option>
+          <option value="WNI">WNI</option>
+          <option value="WNA">WNA</option>
+        </select>
+        <div class="error-message">Kewarganegaraan wajib diisi</div>
+      </div>
+      <button type="submit" id="submitBtn">Simpan</button>
+    </form>
+  </div>
+  <div class="alert" id="alert"></div>
+
+  <script>
+    const form = document.getElementById('wargaForm');
+    const pekerjaanSelect = document.getElementById('pekerjaan');
+    const pekerjaanLainnyaGroup = document.getElementById('pekerjaanLainnyaGroup');
+    const pekerjaanLainnyaInput = document.getElementById('pekerjaanLainnya');
+    const submitBtn = document.getElementById('submitBtn');
+    const alertBox = document.getElementById('alert');
+
+    function showAlert(message, type) {
+      alertBox.textContent = message;
+      alertBox.className = `alert ${type} show`;
+      setTimeout(() => {
+        alertBox.className = 'alert';
+      }, 3000);
+    }
+
+    function validateForm(data) {
+      const errors = [];
+      if (!data.nik || !/^\d{16}$/.test(data.nik)) {
+        errors.push({ field: 'nik', message: 'NIK harus berisi 16 digit angka' });
+      }
+      if (!data.nama_lengkap) {
+        errors.push({ field: 'nama_lengkap', message: 'Nama lengkap wajib diisi' });
+      }
+      if (!data.tempat_lahir) {
+        errors.push({ field: 'tempat_lahir', message: 'Tempat lahir wajib diisi' });
+      }
+      if (!data.tanggal_lahir) {
+        errors.push({ field: 'tanggal_lahir', message: 'Tanggal lahir wajib diisi' });
+      }
+      if (!data.jenis_kelamin) {
+        errors.push({ field: 'jenis_kelamin', message: 'Jenis kelamin wajib diisi' });
+      }
+      if (!data.pendidikan) {
+        errors.push({ field: 'pendidikan', message: 'Pendidikan wajib diisi' });
+      }
+      if (!data.pekerjaan) {
+        errors.push({ field: 'pekerjaan', message: 'Pekerjaan wajib diisi' });
+      }
+      if (data.pekerjaan === 'Lainnya' && !data.pekerjaanLainnya) {
+        errors.push({ field: 'pekerjaanLainnya', message: 'Pekerjaan lainnya wajib diisi' });
+      }
+      if (!data.agama) {
+        errors.push({ field: 'agama', message: 'Agama wajib diisi' });
+      }
+      if (!data.status_pernikahan) {
+        errors.push({ field: 'status_pernikahan', message: 'Status pernikahan wajib diisi' });
+      }
+      if (!data.kewarganegaraan) {
+        errors.push({ field: 'kewarganegaraan', message: 'Kewarganegaraan wajib diisi' });
+      }
+      return errors;
+    }
+
+    function displayErrors(errors) {
+      document.querySelectorAll('.form-group').forEach(group => {
+        group.classList.remove('error');
+      });
+      errors.forEach(error => {
+        const field = document.getElementById(error.field).closest('.form-group');
+        field.classList.add('error');
+        field.querySelector('.error-message').textContent = error.message;
+      });
+    }
+
+    pekerjaanSelect.addEventListener('change', () => {
+      if (pekerjaanSelect.value === 'Lainnya') {
+        pekerjaanLainnyaGroup.style.display = 'block';
+        pekerjaanLainnyaInput.required = true;
+      } else {
+        pekerjaanLainnyaGroup.style.display = 'none';
+        pekerjaanLainnyaInput.required = false;
+        pekerjaanLainnyaInput.value = '';
+      }
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      submitBtn.disabled = true;
+
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData);
+      data.pekerjaan = data.pekerjaan === 'Lainnya' ? data.pekerjaanLainnya : data.pekerjaan;
+      delete data.pekerjaanLainnya;
+
+      const errors = validateForm(data);
+      if (errors.length > 0) {
+        displayErrors(errors);
+        showAlert('Harap lengkapi semua kolom dengan benar', 'error');
+        submitBtn.disabled = false;
+        return;
+      }
+
+      try {
+        const response = await fetch('http://bontomanai.inesa.id/api/warga', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+        if (!response.ok) {
+          throw new Error(result.message || 'Gagal menyimpan data');
+        }
+
+        showAlert(result.message || 'Data berhasil disimpan', 'success');
+        form.reset();
+        pekerjaanLainnyaGroup.style.display = 'none';
+        pekerjaanLainnyaInput.required = false;
+      } catch (err) {
+        console.error('Kesalahan:', err);
+        let errorMessage = err.message;
+        if (err.name === 'AbortError') {
+          errorMessage = 'Permintaan habis waktu, silakan coba lagi';
+        } else if (err.message.includes('Failed to fetch')) {
+          errorMessage = 'Gagal terhubung ke server, periksa backend atau koneksi';
+        }
+        showAlert(errorMessage, 'error');
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
